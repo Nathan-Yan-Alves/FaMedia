@@ -4,8 +4,10 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>FaMedia</title>
+        <title>FaMedia - Entre ou Cadastre-se</title>
         <link rel="stylesheet" href="/public/styles/style.css" />
+        <script src="/src/controllers/createAcc.js" defer></script>
+        <script src="/src/controllers/forgetPass.js" defer></script>
     </head>
     <body>
         <div class="container">
@@ -15,23 +17,25 @@
                     <input
                         type="email"
                         name="email"
-                        id="email"
+                        class="inp"
                         placeholder="Digite seu email"
                         autocomplete="off"
                     />
                     <input
                         type="password"
                         name="password"
-                        id="password"
+                        class="inp"
                         placeholder="Digite sua senha"
                         autocomplete="off"
                     />
-                    <button>Entrar</button>
-                    <a href="#">Esqueceu a senha?</a>
+                    <button class="btn-purple">Entrar</button>
+                    <p id="forget-password">Esqueceu a senha?</p>
                 </div>
                 <div class="division">ou</div>
                 <div class="create-account">
-                    <button>Criar nova conta</button>
+                    <button id="btn-create" class="btn-white">
+                        Criar nova conta
+                    </button>
                 </div>
             </div>
         </div>
