@@ -1,34 +1,21 @@
 @keyframes inputAnim {
     0% {
-        border-left: 1px solid #fff;
+        border-left: 1px solid var(--white);
     }
 
     34% {
-        border-top: 1px solid #fff;
+        border-top: 1px solid var(--white);
     }
 
     68% {
-        border-right: 1px solid #fff;
+        border-right: 1px solid var(--white);
     }
 
     100% {
-        border-left: 1px solid #fff;
-        border-top: 1px solid #fff;
-        border-right: 1px solid #fff;
+        border-left: 1px solid var(--white);
+        border-top: 1px solid var(--white);
+        border-right: 1px solid var(--white);
     }
-}
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    font-size: 62.5%;
-}
-
-body {
-    font-family: Arial, Helvetica, sans-serif;
 }
 
 .container {
@@ -37,7 +24,7 @@ body {
     flex-direction: column;
 
     height: 100vh;
-    background: linear-gradient(#be50d4, #a528ad);
+    background: linear-gradient(var(--light-purple), var(--purple));
     padding: 1.2rem;
 }
 
@@ -61,7 +48,7 @@ body {
 
     border-radius: 0.8rem;
 
-    box-shadow: 3px 3px 5px black;
+    box-shadow: 3px 3px 5px var(--black);
 
     font-size: 1.7rem;
 
@@ -73,15 +60,15 @@ body {
 }
 
 .btn-purple {
-    color: #fff;
-    background-color: #a528ad;
-    border: 1px solid #fff;
+    color: var(--white);
+    background-color: var(--purple);
+    border: 1px solid var(--white);
 }
 
 .btn-white {
-    color: #a528ad;
-    background: #fff;
-    border: 1px solid #a528ad;
+    color: var(--purple);
+    background: var(--white);
+    border: 1px solid var(--purple);
 }
 
 #logo {
@@ -103,13 +90,13 @@ body {
 
     outline: none;
     border: 0;
-    border-bottom: 1px solid #fff;
+    border-bottom: 1px solid var(--white);
 
     background: transparent;
 
     font-size: 1.7rem;
 
-    color: #fff;
+    color: var(--white);
 }
 
 .inp:focus {
@@ -118,7 +105,7 @@ body {
 }
 
 .inp::placeholder {
-    color: #fff;
+    color: var(--white);
 }
 
 #forget-password {
@@ -126,7 +113,7 @@ body {
 
     font-size: 1.7rem;
     text-decoration: none;
-    color: white;
+    color: var(--white);
 
     margin-bottom: 0.8rem;
 }
@@ -140,7 +127,7 @@ body {
     align-items: center;
     justify-content: center;
 
-    color: #fff;
+    color: var(--white);
     font-size: 2.2rem;
 }
 
@@ -150,7 +137,7 @@ body {
     height: 1px;
     width: calc(50% - 25px);
 
-    background: #fff;
+    background: var(--white);
 }
 
 .division::before {
@@ -168,7 +155,7 @@ body {
 @media screen and (min-width: 1025px) {
     .container {
         padding: 0;
-        background: url("/public/images/Family-Banner.jpg") no-repeat
+        background: url("/public/images/family-Banner.jpg") no-repeat
             center/cover;
     }
 
@@ -179,8 +166,8 @@ body {
 
         justify-content: center;
 
-        box-shadow: 5px 5px 10px black;
+        box-shadow: 5px 5px 10px var(--black);
 
-        background: linear-gradient(#be50d4, #a528ad);
+        background: linear-gradient(var(--light-purple), var(--purple));
     }
 }
