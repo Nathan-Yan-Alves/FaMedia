@@ -1,11 +1,19 @@
 body {
-    background: var(--purple);
+    font-family: "Oswald", sans-serif;
+
+    background: radial-gradient(
+        ellipse at center,
+        var(--light-purple),
+        var(--purple)
+    );
 }
 
 header {
     width: 100%;
-    height: 10rem;
+    height: 8.5rem;
     padding: 1.2rem;
+
+    position: relative;
 
     background: var(--white);
 
@@ -13,21 +21,76 @@ header {
     align-items: center;
     justify-content: space-between;
 
-    text-align: center;
+    box-shadow: 0 1px 10px #000;
+}
+
+.changeAvatar-container {
+    width: 150px;
+    padding: 5px;
+
+    position: absolute;
+    right: 4rem;
+    top: 5rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: var(--white);
+    border: 3px solid #000;
+    border-radius: 0.8rem;
+    border-top-right-radius: 0;
+
+    transition: all 0.6s;
+}
+
+.changeAvatar-container img {
+    width: 24px;
+}
+
+.changeAvatar-container span {
+    font-size: 1.6rem;
+}
+
+.changeAvatar-container:hover {
+    background: #000;
+    color: #fff;
+}
+
+#changeAvatar {
+    width: 5rem;
+    cursor: pointer;
+}
+
+#changeAvatar:hover {
+    background: rgb(0, 0, 0, 0.3);
+}
+
+.avatar {
+    border: 1px solid #000;
+    border-radius: 50%;
+}
+
+#logo {
+    display: none;
 }
 
 #phrase {
-    font-size: 1.4rem;
+    width: 100%;
+    margin-right: 0.8rem;
+
+    font-size: 1.6rem;
     font-style: italic;
+    text-align: center;
 }
 
 .openNav {
     position: absolute;
-    width: 46px;
+    width: 35px;
 
-    right: -10%;
+    right: -5%;
     top: 50%;
-    transform: translate(0, -50%);
+    transform: translate(-3%, -50%);
 
     background: var(--white);
     border-top-right-radius: 50%;
@@ -36,18 +99,23 @@ header {
 
 .sideNav {
     position: fixed;
+    width: 250px;
     padding: 10px;
 
+    left: -250px;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translate(5%, -50%);
 
     background: var(--white);
     border-top-right-radius: 0.8rem;
     border-bottom-right-radius: 0.8rem;
+
+    transition: all 0.8s;
 }
 
 .sideNav-content h2 {
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
 }
 
 .sideNav-content ul li {
@@ -56,7 +124,7 @@ header {
     display: flex;
     align-items: center;
 
-    font-size: 1.5rem;
+    font-size: 1.7rem;
 
     margin-bottom: 0.8rem;
 }
@@ -65,11 +133,280 @@ header {
     margin-right: 1rem;
 }
 
-#logo {
+.sideNavToggle {
+    left: -15px;
+}
+
+.without-family {
+    width: 100%;
+    font-size: 1.4rem;
+
+    padding: 1.2rem;
+}
+
+.without-family h3 {
+    margin-bottom: 0.5rem;
+}
+
+#btn-sidenav {
+    width: 100%;
+    height: 30px;
+    margin: 1.2rem 0;
+
+    background: var(--purple);
+    border: none;
+    border-radius: 0.8rem;
+    color: white;
+
+    transition: all 0.5s;
+}
+
+#btn-sidenav:hover {
+    opacity: 0.6;
+}
+
+.publish {
+    margin: 1.5rem;
+    padding: 1.5rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--white);
+
+    border-radius: 0.8rem;
+    box-shadow: 3px 3px 10px #000;
+}
+
+.make-post {
+    width: 100%;
+    margin-bottom: 1.3rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.make-post input {
+    width: 100%;
+    margin-left: 1rem;
+
+    border-radius: 0.8rem;
+    border: 1px solid #000;
+
+    padding: 0.8rem;
+}
+
+.make-post input:focus {
+    outline: 0;
+}
+
+#files {
     display: none;
-    width: 70px;
+}
+
+#photo-video {
+    display: flex;
+    align-items: center;
+
+    cursor: pointer;
+}
+
+#photo-video img {
+    margin: 0.5rem;
+    width: 30px;
+}
+
+#photo-video span {
+    font-size: 1.5rem;
+}
+
+.footer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+#publish-btn {
+    height: 3.8rem;
+    padding: 1rem;
+    background: var(--white);
+
+    border: 1px solid #000;
+    border-radius: 0.8rem;
+}
+
+#publish-btn:hover {
+    background: var(--purple);
+    color: var(--white);
+}
+
+.overlay {
+    display: none;
+    width: 100%;
+    height: 100%;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.publish-modal {
+    width: 80%;
+    height: 80%;
+    padding: 20px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    background: var(--white);
+    border: 3px solid #000;
+    border-radius: 0.8rem;
+}
+
+.publish-modal textarea {
+    width: 100%;
+    height: 40%;
+    padding: 10px;
+
+    resize: none;
+    outline: none;
+
+    border: 1px solid #000;
+    border-radius: 0.8rem;
+
+    font-size: 1.7rem;
+}
+
+.publish-modal button {
+    width: 100%;
+    height: 50px;
+
+    border: 1px solid #000;
+    border-radius: 0.8rem;
+
+    background: var(--purple);
+    color: var(--white);
+
+    font-size: 1.9rem;
+
+    margin-top: 1.2rem;
+
+    transition: all 0.6s;
+}
+
+.publish-modal button:hover {
+    color: var(--purple);
+    background: var(--white);
+}
+
+.publish-user {
+    display: flex;
+    align-items: center;
+
+    border-bottom: 1px solid #000;
+    margin-bottom: 1.7rem;
+    padding: 1.3rem 0;
+}
+
+.post {
+    margin: 1.5rem;
+    margin-top: 2rem;
+    padding: 1.5rem;
+
+    background: var(--white);
+
+    border-radius: 0.8rem;
+    box-shadow: 3px 3px 10px #000;
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+
+    margin-bottom: 1.6rem;
+}
+
+.username {
+    font-weight: 600;
+    font-size: 1.8rem;
+    margin-left: 1.2rem;
+}
+
+.post-content {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.3rem;
 }
 
 .hidden {
     display: none;
+}
+
+@media screen and (min-width: 1025px) {
+    .avatar {
+        width: 4rem;
+    }
+
+    #logo {
+        display: block;
+        width: 15rem;
+    }
+
+    .main {
+        display: grid;
+        grid-template: 1fr 1fr / 250px 1fr;
+        grid-template-areas:
+            "sidenav pub"
+            "sidenav post";
+    }
+
+    #photo-video img {
+        width: 36px;
+    }
+
+    #photo-video span {
+        font-size: 1.7rem;
+    }
+
+    .publish {
+        grid-area: pub;
+    }
+
+    .post {
+        grid-area: post;
+    }
+
+    .post-content {
+        font-size: 1.5rem;
+    }
+
+    .sideNav {
+        margin-top: 1.5rem;
+        width: 90%;
+        position: static;
+
+        grid-area: sidenav;
+        transform: none;
+
+        box-shadow: 3px 3px 10px #000;
+    }
+
+    .openNav {
+        display: none;
+    }
+
+    .without-family {
+        padding: 0;
+    }
 }
