@@ -10,17 +10,6 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-let auth = firebase.auth();
-let email = document.querySelector("#email");
-let password = document.querySelector("#password");
-let loginBtn = document.querySelector("#loginBtn");
-
-// loginBtn.addEventListener("click", () => {
-//     auth.createUserWithEmailAndPassword(email, password)
-//         .then(() => {
-//             console.log("Usuario logado");
-//         })
-//         .catch((err) => {
-//             console.log(err);
-//         });
-// });
+var auth = firebase.auth();
+var db = firebase.firestore();
+var storage = firebase.storage();

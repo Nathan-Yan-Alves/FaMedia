@@ -3,6 +3,7 @@ let btnCreateAcc = document.querySelector("#btn-create");
 let forms = [];
 let inpNameAtr = ["name", "lastName", "email", "password"];
 let inpPlaceholder = ["Nome", "Sobrenome", "Email", "Senha"];
+let oneClick = 0;
 
 function addInput(type, name, placeholder) {
     return {
@@ -56,7 +57,11 @@ function createInput(formName, placeholder) {
 }
 
 btnCreateAcc.addEventListener("click", () => {
-    changeBtn();
-    clearForm();
-    createForm();
+    if (!oneClick) {
+        changeBtn();
+        clearForm();
+        createForm();
+    }
+
+    oneClick = 1;
 });

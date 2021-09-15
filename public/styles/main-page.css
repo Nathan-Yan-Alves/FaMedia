@@ -1,3 +1,12 @@
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 body {
     font-family: "Oswald", sans-serif;
 
@@ -6,6 +15,35 @@ body {
         var(--light-purple),
         var(--purple)
     );
+}
+
+.load-page {
+    z-index: 999;
+    width: 100%;
+    height: 100%;
+
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--white);
+}
+
+.loader {
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid var(--purple);
+    border-radius: 50%;
+
+    width: 12rem;
+    height: 12rem;
+
+    animation: spin 2s linear infinite;
 }
 
 header {
@@ -42,6 +80,7 @@ header {
     border-top-right-radius: 0;
 
     transition: all 0.6s;
+    cursor: pointer;
 }
 
 .changeAvatar-container img {
@@ -57,18 +96,27 @@ header {
     color: #fff;
 }
 
-#changeAvatar {
-    width: 5rem;
+#profileAvatar {
     cursor: pointer;
 }
 
-#changeAvatar:hover {
+#profileAvatar:hover {
     background: rgb(0, 0, 0, 0.3);
 }
 
 .avatar {
-    border: 1px solid #000;
+    width: 60px;
+    height: 60px;
+
+    flex-shrink: 0;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+
     border-radius: 50%;
+    border: 1px solid #000;
 }
 
 #logo {
@@ -113,6 +161,12 @@ header {
     transition: all 0.8s;
 }
 
+.sideNav-content {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-between;
+}
+
 .sideNav-content h2 {
     margin-bottom: 1.5rem;
     font-size: 1.8rem;
@@ -146,6 +200,23 @@ header {
 
 .without-family h3 {
     margin-bottom: 0.5rem;
+}
+
+.code-container {
+    font-size: 1.5rem;
+}
+
+#family-code {
+    display: block;
+    width: fit-content;
+    margin: auto;
+    margin-top: 0.5rem;
+    padding: 10px;
+
+    border: 1px solid var(--purple);
+    border-radius: 0.8rem;
+
+    color: var(--purple);
 }
 
 #btn-sidenav {
@@ -203,7 +274,7 @@ header {
     outline: 0;
 }
 
-#files {
+input[type="file"] {
     display: none;
 }
 
@@ -354,10 +425,6 @@ header {
 }
 
 @media screen and (min-width: 1025px) {
-    .avatar {
-        width: 4rem;
-    }
-
     #logo {
         display: block;
         width: 15rem;

@@ -13,9 +13,10 @@
             defer
         ></script>
 
+        <script src="/src/db/init.js" defer></script>
         <script src="/src/controllers/createAcc.js" defer></script>
         <script src="/src/controllers/forgetPass.js" defer></script>
-        <script src="/src/db/init.js" defer></script>
+        <script src="/src/controllers/auth.js" defer></script>
     </head>
     <body>
         <div class="container">
@@ -25,7 +26,7 @@
                     <input
                         type="email"
                         name="email"
-                        id="email"
+                        id="emailLogin"
                         class="inp"
                         placeholder="Digite seu email"
                         autocomplete="off"
@@ -33,7 +34,7 @@
                     <input
                         type="password"
                         name="password"
-                        id="password"
+                        id="passwordLogin"
                         class="inp"
                         placeholder="Digite sua senha"
                         autocomplete="off"

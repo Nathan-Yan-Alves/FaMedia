@@ -13,37 +13,60 @@
         />
         <link rel="stylesheet" href="/public/styles/global.css" />
         <link rel="stylesheet" href="/public/styles/main-page.css" />
+
+        <script src="/src/controllers/rejectPageAcess.js" defer></script>
+
+        <script
+            src="https://www.gstatic.com/firebasejs/8.9.1/firebase.js"
+            defer
+        ></script>
+        <script src="/src/db/init.js" defer></script>
+
+        <script src="/src/controllers/uploadFiles.js" defer></script>
         <script src="/src/controllers/openNav.js" defer></script>
         <script src="/src/controllers/changeAvatar.js" defer></script>
-        <script src="/src/controllers/uploadFiles.js" defer></script>
+        <script src="/src/controllers/randomFamilyCode.js" defer></script>
     </head>
     <body>
+        <div class="load-page">
+            <div class="loader"></div>
+        </div>
         <header>
             <img src="/public/images/logo.png" alt="Logo" id="logo" />
             <span id="phrase">
                 "Uma família feliz nada mais é que o paraíso antecipado."
             </span>
-            <img
-                src="/public/images/default-avatar.png"
-                alt="Avatar"
-                class="avatar"
-                id="changeAvatar"
-                role="button"
-            />
+            <div class="avatar">
+                <img
+                    src="/public/images/default-avatar.png"
+                    alt="Avatar"
+                    id="profileAvatar"
+                    role="button"
+                />
+            </div>
             <div class="changeAvatar-container hidden">
                 <img src="/public/images/settings.png" alt="Configuração" />
                 <span>Trocar de imagem</span>
+                <input
+                    type="file"
+                    name="files"
+                    id="filesAvatar"
+                    multiple
+                    accept="image/*"
+                />
             </div>
         </header>
         <div class="main">
             <div class="overlay">
                 <div class="publish-modal hidden">
                     <div class="publish-user">
-                        <img
-                            src="/public/images/default-avatar.png"
-                            alt="Avatar"
-                            class="avatar"
-                        />
+                        <div class="avatar">
+                            <img
+                                src="/public/images/default-avatar.png"
+                                alt="Avatar"
+                                role="button"
+                            />
+                        </div>
                         <span class="username">Nome qualquer</span>
                     </div>
                     <textarea
@@ -63,31 +86,40 @@
                         class="openNav"
                 /></span>
                 <div class="sideNav-content">
-                    <h2>Membros da família</h2>
-                    <ul>
-                        <!-- <li>
-                            <img
-                                src="/public/images/default-avatar.png"
-                                alt="Avatar"
-                                class="avatar"
-                            />
-                            Jorge
-                        </li> -->
-                    </ul>
+                    <div class="family-members">
+                        <!-- <h2>Membros da família</h2>
+                        <ul>
+                            <li>
+                                <img
+                                    src="/public/images/default-avatar.png"
+                                    alt="Avatar"
+                                    class="avatar"
+                                />
+                                Jorge
+                            </li>
+                        </ul> -->
+                    </div>
                     <div class="without-family">
                         <h3>Você não está em nenhuma família</h3>
-                        <span>Clique no botão para criar a sua</span>
+                        <span>Clique no botão para criar a sua!</span>
                         <button id="btn-sidenav">Criar família</button>
+                    </div>
+                    <div class="code-container hidden">
+                        <span>Envie o código para seus familiares</span>
+                        <span id="family-code"></span>
                     </div>
                 </div>
             </div>
             <div class="publish">
                 <div class="make-post">
-                    <img
-                        src="/public/images/default-avatar.png"
-                        alt="Avatar"
-                        class="avatar"
-                    />
+                    <div class="avatar">
+                        <img
+                            src="/public/images/default-avatar.png"
+                            alt="Avatar"
+                            id="profileAvatar1"
+                            role="button"
+                        />
+                    </div>
                     <input
                         type="text"
                         placeholder="Compartilhe algo com sua família"
@@ -98,7 +130,7 @@
                         <input
                             type="file"
                             name="files"
-                            id="files"
+                            id="filesPublish"
                             multiple
                             accept="image/*, video/*"
                         />
@@ -111,13 +143,16 @@
                     <button id="publish-btn">Publicar</button>
                 </div>
             </div>
-            <div class="post">
+            <!-- <div class="post">
                 <div class="post-header">
-                    <img
-                        src="/public/images/default-avatar.png"
-                        alt="Avatar"
-                        class="avatar"
-                    />
+                    <div class="avatar">
+                <img
+                    src="/public/images/default-avatar.png"
+                    alt="Avatar"
+                    id="profileAvatar"
+                    role="button"
+                />
+            </div>
                     <span class="username">Nome qualquer</span>
                 </div>
                 <div class="post-content">
@@ -127,7 +162,7 @@
                     veritatis esse itaque dicta necessitatibus nam temporibus
                     doloremque.
                 </div>
-            </div>
+            </div> -->
         </div>
     </body>
 </html>
