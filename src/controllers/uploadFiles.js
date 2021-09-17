@@ -10,9 +10,6 @@ let overlay = document.querySelector(".overlay");
 function upload() {
     let files = inpFilePub.files;
     let file = files[0];
-    let params = new URLSearchParams(document.location.search.substring(1));
-    let id = params.get("user");
-
     let postImageRef = storage.ref().child("Posts_image");
 
     reader.readAsDataURL(file);

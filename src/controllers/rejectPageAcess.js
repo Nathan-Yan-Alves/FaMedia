@@ -6,7 +6,7 @@ function checkLogin() {
     } else {
         setTimeout(() => {
             blankPage.classList.add("hidden");
-        }, 2000);
+        }, 2500);
     }
 }
 

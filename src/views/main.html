@@ -24,7 +24,8 @@
 
         <script src="/src/controllers/uploadFiles.js" defer></script>
         <script src="/src/controllers/openNav.js" defer></script>
-        <script src="/src/controllers/changeAvatar.js" defer></script>
+        <script src="/src/controllers/settings.js" defer></script>
+        <script src="/src/controllers/addUserSidenav.js" defer></script>
         <script src="/src/controllers/randomFamilyCode.js" defer></script>
     </head>
     <body>
@@ -44,16 +45,22 @@
                     role="button"
                 />
             </div>
-            <div class="changeAvatar-container hidden">
-                <img src="/public/images/settings.png" alt="Configuração" />
-                <span>Trocar de imagem</span>
-                <input
-                    type="file"
-                    name="files"
-                    id="filesAvatar"
-                    multiple
-                    accept="image/*"
-                />
+            <div class="settings-container hidden">
+                <div class="changeAvatar-container">
+                    <img src="/public/images/settings.png" alt="Configuração" />
+                    <span>Trocar de imagem</span>
+                    <input
+                        type="file"
+                        name="files"
+                        id="filesAvatar"
+                        multiple
+                        accept="image/*"
+                    />
+                </div>
+                <div class="exit">
+                    <img src="/public/images/logout.png" alt="Sair" />
+                    <span>Logout</span>
+                </div>
             </div>
         </header>
         <div class="main">
@@ -87,17 +94,7 @@
                 /></span>
                 <div class="sideNav-content">
                     <div class="family-members">
-                        <!-- <h2>Membros da família</h2>
-                        <ul>
-                            <li>
-                                <img
-                                    src="/public/images/default-avatar.png"
-                                    alt="Avatar"
-                                    class="avatar"
-                                />
-                                Jorge
-                            </li>
-                        </ul> -->
+                        <h2 class="hidden">Membros da família</h2>
                     </div>
                     <div class="without-family">
                         <h3>Você não está em nenhuma família</h3>
@@ -107,6 +104,11 @@
                     <div class="code-container hidden">
                         <span>Envie o código para seus familiares</span>
                         <span id="family-code"></span>
+                    </div>
+                    <div class="division">ou</div>
+                    <div class="enter-code">
+                        <span>Insira o código</span>
+                        <input type="text" class="inp-code" />
                     </div>
                 </div>
             </div>

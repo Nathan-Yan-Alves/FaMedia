@@ -1,9 +1,11 @@
-let inpFileAvatar = document.querySelector("#filesAvatar");
+var params = new URLSearchParams(document.location.search.substring(1));
+var id = params.get("user");
+
 let avatar = document.querySelector("#profileAvatar");
 let avatar1 = document.querySelector("#profileAvatar1");
 let avatarContainer = document.querySelector(".changeAvatar-container");
-let params = new URLSearchParams(document.location.search.substring(1));
-let id = params.get("user");
+let exit = document.querySelector(".exit");
+let inpFileAvatar = document.querySelector("#filesAvatar");
 let usersAvatarRef = storage.ref().child(`Users_avatar/${id}.jpg`);
 
 function changeIcon(white = true) {
@@ -16,13 +18,24 @@ function changeIcon(white = true) {
 
 function downloadAvatar() {
     usersAvatarRef.getDownloadURL().then((url) => {
-        avatar.src = url;
-        avatar1.src = url;
+        db.collection("Users")
+            .doc(id)
+            .update({ imageId: url })
+            .then(() => {
+                avatar.src = url;
+                avatar1.src = url;
+            });
     });
 }
 
 function toggleSettings() {
-    avatarContainer.classList.toggle("hidden");
+    avatarContainer.parentElement.classList.toggle("hidden");
+}
+
+function logout() {
+    auth.signOut().then(() => {
+        location.href = "/src/views/login.html";
+    });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -43,6 +56,10 @@ avatarContainer.addEventListener("mouseleave", () => {
 
 avatarContainer.addEventListener("click", () => {
     inpFileAvatar.click();
+});
+
+exit.addEventListener("click", () => {
+    logout();
 });
 
 inpFileAvatar.addEventListener("change", () => {

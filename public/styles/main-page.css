@@ -62,36 +62,51 @@ header {
     box-shadow: 0 1px 10px #000;
 }
 
-.changeAvatar-container {
-    width: 150px;
+.settings-container {
+    width: 160px;
     padding: 5px;
 
     position: absolute;
-    right: 4rem;
+    right: 6rem;
     top: 5rem;
 
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
 
     background: var(--white);
     border: 3px solid #000;
     border-radius: 0.8rem;
     border-top-right-radius: 0;
-
-    transition: all 0.6s;
-    cursor: pointer;
 }
 
-.changeAvatar-container img {
+.settings-container img {
     width: 24px;
+    margin-right: 0.5rem;
 }
 
-.changeAvatar-container span {
+.settings-container span {
     font-size: 1.6rem;
 }
 
-.changeAvatar-container:hover {
+.changeAvatar-container {
+    border-bottom: 2px solid var(--black);
+}
+
+.changeAvatar-container,
+.exit {
+    width: 100%;
+    padding: 10px 5px;
+
+    display: flex;
+    align-items: center;
+
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+.changeAvatar-container:hover,
+.exit:hover {
     background: #000;
     color: #fff;
 }
@@ -167,24 +182,36 @@ header {
     justify-content: space-between;
 }
 
-.sideNav-content h2 {
+.family-members h2 {
     margin-bottom: 1.5rem;
     font-size: 1.8rem;
+    text-align: center;
 }
 
-.sideNav-content ul li {
+.family-members ul li {
     list-style-type: none;
+
+    margin-bottom: 1.2rem;
 
     display: flex;
     align-items: center;
 
     font-size: 1.7rem;
-
-    margin-bottom: 0.8rem;
 }
 
-.sideNav-content img {
+.family-members span {
+    margin-left: 0.8rem;
+}
+
+.family-members avatar {
+    width: 50px;
+    height: 50px;
+}
+
+.family-members img {
     margin-right: 1rem;
+    width: 100%;
+    height: 100%;
 }
 
 .sideNavToggle {
@@ -202,8 +229,37 @@ header {
     margin-bottom: 0.5rem;
 }
 
+.division {
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--purple);
+}
+
+.division::before,
+.division::after {
+    background: var(--purple);
+}
+
+.enter-code {
+    font-size: 1.4rem;
+}
+
+.inp-code {
+    width: 100%;
+    padding: 10px;
+
+    margin-top: 0.7rem;
+
+    outline: 0;
+    border: 1px solid var(--purple);
+    border-radius: 0.8rem;
+
+    color: var(--purple);
+    font-family: "Oswald", sans-serif;
+}
+
 .code-container {
     font-size: 1.5rem;
+    letter-spacing: 0.1rem;
 }
 
 #family-code {
