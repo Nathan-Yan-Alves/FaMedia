@@ -1,18 +1,18 @@
+import { signOut } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
 var params = new URLSearchParams(document.location.search.substring(1));
 var id = params.get("user");
 
-let avatar = document.querySelector("#profileAvatar");
-let avatar1 = document.querySelector("#profileAvatar1");
+let avatars = document.querySelectorAll(".profileAvatar");
 let avatarContainer = document.querySelector(".changeAvatar-container");
 let exit = document.querySelector(".exit");
 let inpFileAvatar = document.querySelector("#filesAvatar");
 let usersAvatarRef = storage.ref().child(`Users_avatar/${id}.jpg`);
 
-function changeIcon(white = true) {
+function changeIcon(white = true, icon, container) {
     if (white) {
-        avatarContainer.children[0].src = "/public/images/settings-white.png";
+        container.children[0].src = `/public/images/${icon}-white.png`;
     } else {
-        avatarContainer.children[0].src = "/public/images/settings.png";
+        container.children[0].src = `/public/images/${icon}.png`;
     }
 }
 
@@ -22,8 +22,9 @@ function downloadAvatar() {
             .doc(id)
             .update({ imageId: url })
             .then(() => {
-                avatar.src = url;
-                avatar1.src = url;
+                avatars.forEach((avatar) => {
+                    avatar.src = url;
+                });
             });
     });
 }
@@ -33,7 +34,7 @@ function toggleSettings() {
 }
 
 function logout() {
-    auth.signOut().then(() => {
+    signOut(auth).then(() => {
         location.href = "/src/views/login.html";
     });
 }
@@ -42,16 +43,16 @@ document.addEventListener("DOMContentLoaded", () => {
     downloadAvatar();
 });
 
-avatar.addEventListener("click", () => {
+avatars[0].addEventListener("click", () => {
     toggleSettings();
 });
 
 avatarContainer.addEventListener("mouseenter", () => {
-    changeIcon(true);
+    changeIcon(true, "settings", avatarContainer);
 });
 
 avatarContainer.addEventListener("mouseleave", () => {
-    changeIcon(false);
+    changeIcon(false, "settings", avatarContainer);
 });
 
 avatarContainer.addEventListener("click", () => {
@@ -62,18 +63,24 @@ exit.addEventListener("click", () => {
     logout();
 });
 
+exit.addEventListener("mouseenter", () => {
+    changeIcon(true, "logout", exit);
+});
+
+exit.addEventListener("mouseleave", () => {
+    changeIcon(false, "logout", exit);
+});
+
 inpFileAvatar.addEventListener("change", () => {
     let files = inpFileAvatar.files;
     let file = files[0];
 
     reader.readAsDataURL(file);
     reader.addEventListener("load", (e) => {
-        avatar.src = e.target.result;
-        avatar.alt = file.name;
-
-        avatar1.src = e.target.result;
-        avatar1.alt = file.name;
-
+        avatars.forEach((avatar) => {
+            avatar.src = e.target.result;
+            avatar.alt = file.name;
+        });
         usersAvatarRef.put(file);
     });
 

@@ -125,5 +125,4 @@ inpCode.addEventListener("change", () => {
     if (auxReturn != 0) {
         getGroupUsers(auxReturn);
     }
-    location.reload();
 });

@@ -1,10 +1,29 @@
+import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+} from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
+
+import {
+    getFirestore,
+    doc,
+    setDoc,
+    getDocs,
+    where,
+    query,
+    collection,
+} from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+
+const auth = getAuth();
+const db = getFirestore();
+
 let email = document.querySelector("#emailLogin");
 let password = document.querySelector("#passwordLogin");
 let loginBtn = document.querySelector("#loginBtn");
 
 function createAccount(name, lastName, email, password) {
     let userUid;
-    auth.createUserWithEmailAndPassword(email, password)
+    createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             userUid = userCredential.user.uid;
             createUserData(name, lastName, email, userUid);
@@ -14,34 +33,29 @@ function createAccount(name, lastName, email, password) {
         });
 }
 
-function createUserData(name, lastName, email, id) {
-    db.collection("Users")
-        .doc(id)
-        .set({
+async function createUserData(name, lastName, email, id) {
+    try {
+        await setDoc(doc(db, "Users", id), {
             userId: id,
             name,
             lastName,
             email,
-        })
-        .then(() => {
-            location.href = `/src/views/main.html?user=${id}`;
-        })
-        .catch((err) => {
-            alert(err.message);
         });
+        location.href = `/src/views/main.html?user=${id}`;
+    } catch (err) {
+        console.log(err);
+    }
 }
 
-function signIn(email, password) {
-    auth.signInWithEmailAndPassword(email, password)
+async function signIn(email, password) {
+    const q = query(collection(db, "Users"), where("email", "==", email.value));
+    const querySnapshot = await getDocs(q);
+
+    signInWithEmailAndPassword(auth, email.value, password.value)
         .then(() => {
-            db.collection("Users")
-                .where("email", "==", email)
-                .get()
-                .then((snapshot) => {
-                    snapshot.forEach((doc) => {
-                        location.href = `/src/views/main.html?user=${doc.id}`;
-                    });
-                });
+            querySnapshot.forEach((doc) => {
+                location.href = `/src/views/main.html?user=${doc.id}`;
+            });
         })
         .catch(() => {
             alert("Login e/ou senha incorretos!");
@@ -51,7 +65,7 @@ function signIn(email, password) {
 }
 
 loginBtn.addEventListener("click", () => {
-    signIn(email.value, password.value);
+    signIn(email, password);
 });
 
 document.querySelector("#btn-create").addEventListener("click", () => {

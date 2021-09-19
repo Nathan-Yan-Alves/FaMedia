@@ -1,3 +1,5 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+
 const firebaseConfig = {
     apiKey: "AIzaSyANtEtpk3BjYbrpDyk1N8i5_SwOZFrCsC0",
     authDomain: "famedia-1161a.firebaseapp.com",
@@ -8,8 +10,4 @@ const firebaseConfig = {
     measurementId: "G-Z13Z37YWTS",
 };
 
-firebase.initializeApp(firebaseConfig);
-
-var auth = firebase.auth();
-var db = firebase.firestore();
-var storage = firebase.storage();
+const app = initializeApp(firebaseConfig);
