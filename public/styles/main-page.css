@@ -120,8 +120,8 @@ header {
 }
 
 .avatar {
-    width: 60px;
-    height: 60px;
+    width: 45px;
+    height: 45px;
 
     flex-shrink: 0;
 }
@@ -140,7 +140,8 @@ header {
 
 #phrase {
     width: 100%;
-    margin-right: auto;
+    margin: auto;
+    margin-right: 0.8rem;
 
     font-size: 1.6rem;
     font-style: italic;
@@ -498,6 +499,11 @@ input[type="file"] {
 }
 
 @media screen and (min-width: 1025px) {
+    .avatar {
+        width: 60px;
+        height: 60px;
+    }
+
     #logo {
         display: block;
         width: 15rem;
@@ -508,7 +514,7 @@ input[type="file"] {
         grid-template: auto 1fr / 250px 1fr;
         grid-template-areas:
             "sidenav pub"
-            ". post";
+            "sidenav post";
     }
 
     #photo-video img {

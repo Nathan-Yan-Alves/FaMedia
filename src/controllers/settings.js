@@ -1,12 +1,34 @@
-import { signOut } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
-var params = new URLSearchParams(document.location.search.substring(1));
-var id = params.get("user");
+import {
+    getAuth,
+    signOut,
+} from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
+
+import {
+    getFirestore,
+    doc,
+    updateDoc,
+} from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+
+import {
+    getStorage,
+    ref,
+    getDownloadURL,
+    uploadBytes,
+} from "https://www.gstatic.com/firebasejs/9.0.0/firebase-storage.js";
+
+const auth = getAuth();
+const db = getFirestore();
+const storage = getStorage();
+
+const params = new URLSearchParams(document.location.search.substring(1));
+const id = params.get("user");
+const reader = new FileReader();
 
 let avatars = document.querySelectorAll(".profileAvatar");
 let avatarContainer = document.querySelector(".changeAvatar-container");
 let exit = document.querySelector(".exit");
 let inpFileAvatar = document.querySelector("#filesAvatar");
-let usersAvatarRef = storage.ref().child(`Users_avatar/${id}.jpg`);
+let usersAvatarRef = ref(storage, `Users_avatar/${id}.jpg`);
 
 function changeIcon(white = true, icon, container) {
     if (white) {
@@ -17,15 +39,13 @@ function changeIcon(white = true, icon, container) {
 }
 
 function downloadAvatar() {
-    usersAvatarRef.getDownloadURL().then((url) => {
-        db.collection("Users")
-            .doc(id)
-            .update({ imageId: url })
-            .then(() => {
-                avatars.forEach((avatar) => {
-                    avatar.src = url;
-                });
-            });
+    getDownloadURL(usersAvatarRef).then((url) => {
+        updateDoc(doc(db, "Users", id), {
+            imageId: url,
+        });
+        avatars.forEach((avatar) => {
+            avatar.src = url;
+        });
     });
 }
 
@@ -35,7 +55,7 @@ function toggleSettings() {
 
 function logout() {
     signOut(auth).then(() => {
-        location.href = "/src/views/login.html";
+        location.href = "/src/views/index.html";
     });
 }
 
@@ -81,7 +101,7 @@ inpFileAvatar.addEventListener("change", () => {
             avatar.src = e.target.result;
             avatar.alt = file.name;
         });
-        usersAvatarRef.put(file);
+        uploadBytes(usersAvatarRef, file);
     });
 
     toggleSettings();

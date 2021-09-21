@@ -1,3 +1,10 @@
+import {
+    getFirestore,
+    addDoc,
+    collection,
+} from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+
+const db = getFirestore();
 const dayOfWeek = [
     "Domingo",
     "Segunda-feira",
@@ -22,33 +29,35 @@ const monthOfYear = [
     "Dezembro",
 ];
 
-let buttons = document.querySelectorAll(".btn");
+const params = new URLSearchParams(document.location.search.substring(1));
+const id = params.get("user");
 
+let buttons = document.querySelectorAll(".btn");
 let inpPub = document.querySelector("#inpPub");
 let modalPub = document.querySelector("#text");
-
 let avatar = document.querySelector(".profileAvatar");
+let familyCode = document.querySelector("#family-code");
+let username = document.querySelector(".username");
+let filesCont = document.querySelector(".files-container");
+let overlay = document.querySelector(".overlay");
 
 function addPostData(postTime, dayWeek, month, input, fileData = false) {
     if (input.length > 0) {
-        db.collection("Posts-content")
-            .doc()
-            .set({
-                familyId: familyCode.textContent,
-                name: username.textContent,
-                avatar: avatar.src,
-                timeLessThenOneDay: `${dayWeek} às ${postTime.getHours()}:${postTime.getMinutes()}`,
-                timeMoreThenOneDay: `${postTime.getDate()} de ${month} de ${postTime.getFullYear()}`,
-                postText: input,
-                fileSrc: fileData ? filesCont.children[0].src : "Sem arquivos",
-            })
-            .then(() => {
-                inpPub.value = "";
-                modalPub.value = "";
-                overlay.style.display = "none";
+        addDoc(collection(db, "Posts-content"), {
+            familyId: familyCode.textContent,
+            name: username.textContent,
+            avatar: avatar.src,
+            timeLessThenOneDay: `${dayWeek} às ${postTime.getHours()}:${postTime.getMinutes()}`,
+            timeMoreThenOneDay: `${postTime.getDate()} de ${month} de ${postTime.getFullYear()}`,
+            postText: input,
+            fileSrc: fileData ? filesCont.children[0].src : "Sem arquivos",
+        });
 
-                alert("Publicado com sucesso!");
-            });
+        inpPub.value = "";
+        modalPub.value = "";
+        overlay.style.display = "none";
+
+        alert("Publicado com sucesso!");
     } else {
         alert("Campo de publicação vazio!");
     }

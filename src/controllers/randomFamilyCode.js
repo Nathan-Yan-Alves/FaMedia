@@ -1,3 +1,19 @@
+import {
+    getFirestore,
+    doc,
+    setDoc,
+    getDocs,
+    where,
+    query,
+    collection,
+    arrayUnion,
+    updateDoc,
+} from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+
+const db = getFirestore();
+const params = new URLSearchParams(document.location.search.substring(1));
+const id = params.get("user");
+
 let codeContainer = document.querySelector(".code-container");
 let createFamilyBtn = document.querySelector("#btn-sidenav");
 let division = document.querySelector(".division");
@@ -7,54 +23,54 @@ let inpCode = document.querySelector(".inp-code");
 let isCodeExist = true;
 let withoutFamily = document.querySelector(".without-family");
 
-function addUserInGroup(cod) {
-    db.collection("Users").doc(id).update({ groupId: cod });
-    db.collection("Family-groups")
-        .doc(cod)
-        .update({
-            users: firebase.firestore.FieldValue.arrayUnion(id),
-        });
+async function addUserInGroup(cod) {
+    await updateDoc(doc(db, "Users", id), {
+        groupId: cod,
+    });
+    await updateDoc(doc(db, "Family-groups", cod), {
+        users: arrayUnion(id),
+    });
 }
 
-function codeHandler() {
-    db.collection("Family-groups")
-        .where("users", "array-contains", id)
-        .get()
-        .then((snapshot) => {
-            snapshot.forEach((doc) => {
-                toggleDivs(doc.id);
-                getGroupUsers(doc.id);
-            });
-        })
-        .catch(() => {
-            isCodeExist = false;
+async function codeHandler() {
+    const q = query(
+        collection(db, "Family-groups"),
+        where("users", "array-contains", id)
+    );
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) {
+        isCodeExist = false;
+    } else {
+        querySnapshot.forEach((doc) => {
+            toggleDivs(doc.id);
+            getGroupUsers(doc.id);
         });
+    }
 }
 
-function getGroupUsers(cod) {
-    db.collection("Users")
-        .where("groupId", "==", cod)
-        .get()
-        .then((queryList) => {
-            if (!queryList.empty) {
-                addUserInGroup(cod);
-                queryList.forEach((doc) => {
-                    document
-                        .querySelector(".family-members")
-                        .firstElementChild.classList.remove("hidden");
-                    setTimeout(() => {
-                        addUser(
-                            doc.data().imageId,
-                            doc.data().name,
-                            doc.data().lastName
-                        );
-                    }, 500);
-                });
-            } else {
-                alert("Código não existe");
-                inpCode.value = "";
-            }
+async function getGroupUsers(cod) {
+    const q = query(collection(db, "Users"), where("groupId", "==", cod));
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+        addUserInGroup(cod);
+        querySnapshot.forEach((doc) => {
+            document
+                .querySelector(".family-members")
+                .firstElementChild.classList.remove("hidden");
+            setTimeout(() => {
+                addUser(
+                    doc.data().imageId,
+                    doc.data().name,
+                    doc.data().lastName
+                );
+            }, 500);
         });
+    } else {
+        alert("Código não existe");
+        inpCode.value = "";
+    }
 }
 
 function getFamilyCode() {
@@ -69,30 +85,21 @@ function getFamilyCode() {
 }
 
 function randomCode() {
-    let code;
+    let code = "";
     for (let i = 0; i < 6; i++) {
         code += Math.round(Math.random() * 9);
     }
     return code;
 }
 
-function storageCode(code) {
-    code = code.slice(1);
-    db.collection("Family-groups")
-        .doc(code)
-        .set({ users: [id] })
-        .then(() => {
-            console.log("Documento adicionado");
-        });
+async function storageCode(code) {
+    await setDoc(doc(db, "Family-groups", code), {
+        users: [id],
+    });
 
-    db.collection("Users")
-        .doc(id)
-        .update({
-            groupId: code,
-        })
-        .then(() => {
-            console.log("Código inserido no documento usuário");
-        });
+    await updateDoc(doc(db, "Users", id), {
+        groupId: code,
+    });
 }
 
 function toggleDivs(code) {
@@ -108,11 +115,11 @@ window.addEventListener("load", () => {
     codeHandler();
 });
 
-createFamilyBtn.addEventListener("click", () => {
+createFamilyBtn.addEventListener("click", async () => {
     let codAux;
     if (!isCodeExist) {
         codAux = randomCode();
-        storageCode(codAux);
+        await storageCode(codAux);
         toggleDivs(codAux);
         getGroupUsers(codAux);
     }

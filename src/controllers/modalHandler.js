@@ -1,4 +1,21 @@
+import {
+    getFirestore,
+    doc,
+    getDoc,
+} from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
+
+import {
+    getStorage,
+    ref,
+    uploadBytes,
+} from "https://www.gstatic.com/firebasejs/9.0.0/firebase-storage.js";
+
+const db = getFirestore();
+const storage = getStorage();
+
 const reader = new FileReader();
+const params = new URLSearchParams(document.location.search.substring(1));
+const id = params.get("user");
 
 let btnClose = document.querySelector("#close-modal");
 let btnModal = document.querySelector("#btn-modal");
@@ -9,13 +26,9 @@ let overlay = document.querySelector(".overlay");
 let pubModal = document.querySelector(".publish-modal");
 let username = document.querySelector(".username");
 
-function changeUsername() {
-    db.collection("Users")
-        .doc(id)
-        .get()
-        .then((doc) => {
-            username.textContent = `${doc.data().name} ${doc.data().lastName}`;
-        });
+async function changeUsername() {
+    let docSnap = await getDoc(doc(db, "Users", id));
+    username.textContent = `${docSnap.data().name} ${docSnap.data().lastName}`;
 }
 
 function closeModal() {
@@ -25,12 +38,12 @@ function closeModal() {
 function upload() {
     let files = inpFilePub.files;
     let file = files[0];
-    let postImageRef = storage.ref().child("Posts_image");
+    let postImageRef = ref(storage, "Posts_image/");
 
     reader.readAsDataURL(file);
 
     reader.addEventListener("load", (e) => {
-        postImageRef.put(file);
+        uploadBytes(postImageRef, file);
         overlay.style.display = "block";
         pubModal.classList.remove("hidden");
 

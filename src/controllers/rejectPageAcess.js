@@ -2,14 +2,14 @@ let blankPage = document.querySelector(".load-page");
 
 function checkLogin() {
     if (location.search == "") {
-        location.href = "/src/views/login.html";
+        location.href = "/src/views/index.html";
     } else {
         setTimeout(() => {
             blankPage.classList.add("hidden");
-        }, 2500);
+        }, 3000);
     }
 }
 
-window.addEventListener("load", () => {
+document.addEventListener("DOMContentLoaded", () => {
     checkLogin();
 });
