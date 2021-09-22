@@ -17,10 +17,12 @@ const reader = new FileReader();
 const params = new URLSearchParams(document.location.search.substring(1));
 const id = params.get("user");
 
+let filesCont;
+let aux;
 let btnClose = document.querySelector("#close-modal");
 let btnModal = document.querySelector("#btn-modal");
 let btnUpload = document.querySelector("#photo-video");
-let filesCont = document.querySelector(".files-container");
+let text = document.querySelector("#text");
 let inpFilePub = document.querySelector("#filesPublish");
 let overlay = document.querySelector(".overlay");
 let pubModal = document.querySelector(".publish-modal");
@@ -32,17 +34,18 @@ async function changeUsername() {
 }
 
 function closeModal() {
+    filesCont.remove();
     overlay.style.display = "none";
 }
 
 function upload() {
     let files = inpFilePub.files;
     let file = files[0];
-    let postImageRef = ref(storage, "Posts_image/");
 
     reader.readAsDataURL(file);
 
     reader.addEventListener("load", (e) => {
+        let postImageRef = ref(storage, `Posts_image/${file.name}`);
         uploadBytes(postImageRef, file);
         overlay.style.display = "block";
         pubModal.classList.remove("hidden");
@@ -53,7 +56,11 @@ function upload() {
         img.style.padding = "5px";
         img.style.width = "75px";
 
-        filesCont.appendChild(img);
+        if (!aux) {
+            filesCont.appendChild(img);
+        }
+        aux = 1;
+        text.after(filesCont);
     });
 }
 
@@ -74,5 +81,8 @@ btnUpload.addEventListener("click", () => {
 });
 
 inpFilePub.addEventListener("change", () => {
+    filesCont = document.createElement("div");
+    filesCont.classList.add("files-container");
+    aux = 0;
     upload();
 });

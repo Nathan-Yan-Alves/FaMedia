@@ -38,10 +38,10 @@ let modalPub = document.querySelector("#text");
 let avatar = document.querySelector(".profileAvatar");
 let familyCode = document.querySelector("#family-code");
 let username = document.querySelector(".username");
-let filesCont = document.querySelector(".files-container");
 let overlay = document.querySelector(".overlay");
 
 function addPostData(postTime, dayWeek, month, input, fileData = false) {
+    let filesCont = document.querySelector(".files-container");
     if (input.length > 0) {
         addDoc(collection(db, "Posts-content"), {
             familyId: familyCode.textContent,
