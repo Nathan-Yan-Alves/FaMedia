@@ -491,7 +491,21 @@ input[type="file"] {
 
 .post-content {
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 1.3rem;
+    font-size: 1.6rem;
+}
+
+.post-image {
+    width: 100%;
+    padding: 1.2rem 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.post-image img {
+    max-width: 80%;
+    max-height: 30rem;
 }
 
 .hidden {
@@ -536,20 +550,6 @@ input[type="file"] {
 
     .post-content {
         font-size: 1.8rem;
-    }
-
-    .post-image {
-        width: 100%;
-        padding: 1.2rem 0;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .post-image img {
-        max-width: 60%;
-        max-height: 30rem;
     }
 
     .sideNav {
