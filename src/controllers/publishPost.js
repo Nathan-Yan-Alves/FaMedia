@@ -47,8 +47,7 @@ function addPostData(postTime, dayWeek, month, input, fileData = false) {
             familyId: familyCode.textContent,
             name: username.textContent,
             avatar: avatar.src,
-            timeLessThenOneDay: `${dayWeek} às ${postTime.getHours()}:${postTime.getMinutes()}`,
-            timeMoreThenOneDay: `${postTime.getDate()} de ${month} de ${postTime.getFullYear()}`,
+            postTime: `${dayWeek} às ${postTime.getHours()}:${postTime.getMinutes()}, ${postTime.getDate()}/${month}/${postTime.getFullYear()}`,
             postText: input,
             fileSrc: fileData ? filesCont.children[0].src : "Sem arquivos",
         });

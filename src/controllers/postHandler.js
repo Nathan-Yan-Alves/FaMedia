@@ -23,16 +23,20 @@ async function readPosts() {
         let divAvatar = document.createElement("div");
         let avatarImg = new Image();
         let usernameTag = document.createElement("span");
+        let spanPostTime = document.createElement("span");
         let divPostContent = document.createElement("div");
         let divPostImage = document.createElement("div");
+        let divUserInfo = document.createElement("div");
         let postImg = new Image();
 
         divPost.classList.add("post");
         divPostHeader.classList.add("post-header");
         divAvatar.classList.add("avatar");
         usernameTag.classList.add("username");
+        spanPostTime.classList.add("post-time");
         divPostContent.classList.add("post-content");
         divPostImage.classList.add("post-image");
+        divUserInfo.classList.add("user-info");
 
         if (post.data().fileSrc != "Sem arquivos") {
             postImg.src = post.data().fileSrc;
@@ -40,6 +44,7 @@ async function readPosts() {
             postImg.id = "Sem arquivos";
         }
 
+        spanPostTime.textContent = post.data().postTime;
         divPostContent.textContent = post.data().postText;
         usernameTag.textContent = post.data().name;
         avatarImg.src = post.data().avatar;
@@ -50,8 +55,10 @@ async function readPosts() {
         }
 
         divAvatar.appendChild(avatarImg);
+        divUserInfo.appendChild(usernameTag);
+        divUserInfo.appendChild(spanPostTime);
         divPostHeader.appendChild(divAvatar);
-        divPostHeader.appendChild(usernameTag);
+        divPostHeader.appendChild(divUserInfo);
         divPost.appendChild(divPostHeader);
         divPost.appendChild(divPostContent);
         postContainer.appendChild(divPost);
