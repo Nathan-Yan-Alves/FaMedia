@@ -1,6 +1,8 @@
 import {
     getFirestore,
+    doc,
     getDocs,
+    getDoc,
     where,
     query,
     collection,
@@ -10,6 +12,17 @@ const db = getFirestore();
 let postContainer = document.querySelector(".posts-container");
 let familyCode = document.querySelector("#family-code");
 
+const params = new URLSearchParams(document.location.search.substring(1));
+const id = params.get("user");
+
+async function getAvatar() {
+    let avatarRef = doc(db, "Users", id);
+    let avatar = await getDoc(avatarRef);
+    let avatarUrl = avatar.data().imageId;
+
+    return avatarUrl;
+}
+
 async function readPosts() {
     const q = query(
         collection(db, "Posts-content"),
@@ -17,7 +30,7 @@ async function readPosts() {
     );
     const querySnapshot = await getDocs(q);
 
-    querySnapshot.forEach((post) => {
+    querySnapshot.forEach(async function (post) {
         let divPost = document.createElement("div");
         let divPostHeader = document.createElement("div");
         let divAvatar = document.createElement("div");
@@ -47,7 +60,7 @@ async function readPosts() {
         spanPostTime.textContent = post.data().postTime;
         divPostContent.textContent = post.data().postText;
         usernameTag.textContent = post.data().name;
-        avatarImg.src = post.data().avatar;
+        avatarImg.src = await getAvatar();
 
         if (postImg.id != "Sem arquivos") {
             divPostImage.appendChild(postImg);
@@ -65,7 +78,7 @@ async function readPosts() {
     });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("load", () => {
     setTimeout(() => {
         readPosts();
     }, 1500);
