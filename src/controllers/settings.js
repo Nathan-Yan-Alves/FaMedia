@@ -29,6 +29,7 @@ let avatarContainer = document.querySelector(".changeAvatar-container");
 let exit = document.querySelector(".exit");
 let inpFileAvatar = document.querySelector("#filesAvatar");
 let usersAvatarRef = ref(storage, `Users_avatar/${id}.jpg`);
+let defaultAvatarRef = ref(storage, "Users_avatar/default-avatar.png");
 
 function changeIcon(white = true, icon, container) {
     if (white) {
@@ -39,14 +40,25 @@ function changeIcon(white = true, icon, container) {
 }
 
 function downloadAvatar() {
-    getDownloadURL(usersAvatarRef).then((url) => {
-        updateDoc(doc(db, "Users", id), {
-            imageId: url,
+    getDownloadURL(usersAvatarRef)
+        .then((url) => {
+            updateDoc(doc(db, "Users", id), {
+                imageId: url,
+            });
+            avatars.forEach((avatar) => {
+                avatar.src = url;
+            });
+        })
+        .catch((error) => {
+            getDownloadURL(defaultAvatarRef).then((url) => {
+                updateDoc(doc(db, "Users", id), {
+                    imageId: url,
+                });
+                avatars.forEach((avatar) => {
+                    avatar.src = url;
+                });
+            });
         });
-        avatars.forEach((avatar) => {
-            avatar.src = url;
-        });
-    });
 }
 
 function toggleSettings() {
